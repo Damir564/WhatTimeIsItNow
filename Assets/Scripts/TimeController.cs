@@ -61,6 +61,20 @@ public class TimeController : MonoBehaviour
         }
     }
 
+    private bool _hasAlarm = false;
+
+    public bool HasAlarm
+    {
+        get
+        {
+            return _hasAlarm;
+        }
+        set
+        {
+            _hasAlarm = value;
+        }
+    }
+
     private TimeSpan _alarmTime;
 
     public TimeSpan AlarmTime
@@ -73,6 +87,18 @@ public class TimeController : MonoBehaviour
         {
             _alarmTime = value;
         }
+    }
+
+    private void ResetAlarm()
+    {
+        _hasAlarm = false;
+        _alarmTime = TimeSpan.MinValue;
+    }
+
+    private void SetAlarm(TimeSpan ts)
+    {
+        _hasAlarm = true;
+        _alarmTime = ts;
     }
 
     public void GetRequest()
@@ -93,11 +119,15 @@ public class TimeController : MonoBehaviour
     private void Start()
     {
         EventController.Instance.GetRequest += GetRequest;
+        EventController.Instance.ResetAlarm += ResetAlarm;
+        EventController.Instance.SetAlarm += SetAlarm;
     }
 
     private void OnDisable()
     {
         EventController.Instance.GetRequest -= GetRequest;
+        EventController.Instance.ResetAlarm -= ResetAlarm;
+        EventController.Instance.SetAlarm -= SetAlarm;
     }
 
     IEnumerator GetTimeHttpRequest (string uri)

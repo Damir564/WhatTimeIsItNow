@@ -212,7 +212,7 @@ GameObject:
   - component: {fileID: 85583432}
   m_Layer: 5
   m_Name: Digit
-  m_TagString: Untagged
+  m_TagString: Clocks
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -350,7 +350,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &219942620
 RectTransform:
   m_ObjectHideFlags: 0
@@ -388,7 +388,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _timeInput: {fileID: 851135954}
-  _timeCorrect: 0
 --- !u!1 &248217132
 GameObject:
   m_ObjectHideFlags: 0
@@ -402,7 +401,7 @@ GameObject:
   - component: {fileID: 248217134}
   m_Layer: 5
   m_Name: Mark (4)
-  m_TagString: Untagged
+  m_TagString: Clocks
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -516,7 +515,7 @@ GameObject:
   - component: {fileID: 463359794}
   m_Layer: 5
   m_Name: Mark (7)
-  m_TagString: Untagged
+  m_TagString: Clocks
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -592,7 +591,7 @@ GameObject:
   - component: {fileID: 474178397}
   m_Layer: 5
   m_Name: Origin
-  m_TagString: Untagged
+  m_TagString: Clocks
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -908,7 +907,7 @@ GameObject:
   - component: {fileID: 613569505}
   m_Layer: 5
   m_Name: Mark (9)
-  m_TagString: Untagged
+  m_TagString: Clocks
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -984,7 +983,7 @@ GameObject:
   - component: {fileID: 622085689}
   m_Layer: 5
   m_Name: Mark (6)
-  m_TagString: Untagged
+  m_TagString: Clocks
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1060,7 +1059,7 @@ GameObject:
   - component: {fileID: 630717169}
   m_Layer: 5
   m_Name: Mark (3)
-  m_TagString: Untagged
+  m_TagString: Clocks
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1136,7 +1135,7 @@ GameObject:
   - component: {fileID: 635016896}
   m_Layer: 5
   m_Name: Mark (2)
-  m_TagString: Untagged
+  m_TagString: Clocks
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1212,7 +1211,7 @@ GameObject:
   - component: {fileID: 679288060}
   m_Layer: 5
   m_Name: Hours
-  m_TagString: Untagged
+  m_TagString: Clocks
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1341,7 +1340,7 @@ GameObject:
   - component: {fileID: 825617693}
   m_Layer: 5
   m_Name: Seconds
-  m_TagString: Untagged
+  m_TagString: Clocks
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2534,11 +2533,11 @@ GameObject:
   - component: {fileID: 1299796974}
   m_Layer: 5
   m_Name: Clocks
-  m_TagString: Untagged
+  m_TagString: Clocks
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1299796973
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2577,7 +2576,7 @@ MonoBehaviour:
   _secondsArrow: {fileID: 825617692}
   _minutesArrow: {fileID: 1737280079}
   _hoursArrow: {fileID: 679288059}
-  checkTimeSeconds: 0
+  checkTimeSeconds: 3600
 --- !u!1 &1317076174
 GameObject:
   m_ObjectHideFlags: 0
@@ -2743,7 +2742,7 @@ GameObject:
   - component: {fileID: 1478526475}
   m_Layer: 5
   m_Name: Mark (5)
-  m_TagString: Untagged
+  m_TagString: Clocks
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2819,7 +2818,7 @@ GameObject:
   - component: {fileID: 1491433699}
   m_Layer: 5
   m_Name: Mark (1)
-  m_TagString: Untagged
+  m_TagString: Clocks
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3165,7 +3164,7 @@ GameObject:
   - component: {fileID: 1539160612}
   m_Layer: 5
   m_Name: Mark (8)
-  m_TagString: Untagged
+  m_TagString: Clocks
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3500,7 +3499,7 @@ GameObject:
   - component: {fileID: 1682472044}
   m_Layer: 5
   m_Name: Mark (11)
-  m_TagString: Untagged
+  m_TagString: Clocks
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3576,7 +3575,7 @@ GameObject:
   - component: {fileID: 1689334987}
   m_Layer: 5
   m_Name: Mark (10)
-  m_TagString: Untagged
+  m_TagString: Clocks
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3787,7 +3786,7 @@ GameObject:
   - component: {fileID: 1737280080}
   m_Layer: 5
   m_Name: Minutes
-  m_TagString: Untagged
+  m_TagString: Clocks
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4153,7 +4152,7 @@ GameObject:
   - component: {fileID: 1860394371}
   m_Layer: 5
   m_Name: Mark
-  m_TagString: Untagged
+  m_TagString: Clocks
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4470,7 +4469,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _services: {fileID: 411834354}
   _clocks: {fileID: 1299796972}
-  _alarm: {fileID: 0}
+  _alarm: {fileID: 219942619}
 --- !u!1 &1993930673
 GameObject:
   m_ObjectHideFlags: 0
@@ -4634,7 +4633,7 @@ GameObject:
   - component: {fileID: 2024449671}
   m_Layer: 5
   m_Name: Marks
-  m_TagString: Untagged
+  m_TagString: Clocks
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4830,7 +4829,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2125229238}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 219942621}
+        m_TargetAssemblyTypeName: Alarm, Assembly-CSharp
+        m_MethodName: SetAlarm
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2125229238
 MonoBehaviour:
   m_ObjectHideFlags: 0

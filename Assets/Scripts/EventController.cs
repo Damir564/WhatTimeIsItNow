@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
-// using System;
+using System;
 
 public class EventController : MonoBehaviour
 {
@@ -18,6 +18,8 @@ public class EventController : MonoBehaviour
 
     public UnityAction SceneReloaded;
     public UnityAction ActivateClocks;
+    public UnityAction ResetAlarm;
+    public event Action<TimeSpan> SetAlarm;
     public UnityAction GetRequest;
 
     private void Awake()
@@ -58,5 +60,15 @@ public class EventController : MonoBehaviour
         Scene scene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(scene.name);
         Debug.Log("Scene Reloaded");
+    }
+
+    public void OnResetAlarm()
+    {
+        EventController.Instance.ResetAlarm?.Invoke();
+    }
+
+    public void OnSetAlarm(TimeSpan ts)
+    {
+        EventController.Instance.SetAlarm?.Invoke(ts);
     }
 }

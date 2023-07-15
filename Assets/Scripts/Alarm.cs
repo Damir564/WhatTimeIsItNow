@@ -10,19 +10,28 @@ public class Alarm : MonoBehaviour
     private int prevLength = -1;
     private TimeSpan _alarmTimeSpan;
 
-    [SerializeField] private bool _timeCorrect;
+    private bool _timeCorrect = false;
 
-    // // Start is called before the first frame update
-    // void Start()
-    // {
-        
-    // }
+    // Start is called before the first frame update
+    private void Start()
+    {
+        EventController.Instance.ResetAlarm += ResetAlarm;
 
-    // // Update is called once per frame
-    // void Update()
-    // {
-        
-    // }
+        EventController.Instance.OnResetAlarm();
+    }
+
+    private void OnDisable()
+    {
+        EventController.Instance.ResetAlarm -= ResetAlarm;
+    }
+
+    private void ResetAlarm()
+    {
+        prevLength = -1;
+        _alarmTimeSpan = TimeSpan.MinValue;
+        _timeInput.text = "";
+        _timeCorrect = false;
+    }
 
     public void OnValueChanged(string value)
     {
@@ -117,8 +126,15 @@ public class Alarm : MonoBehaviour
         Regex regex = new Regex(@"\d{2}:\d{2}:\d{2}");
         _timeCorrect = regex.IsMatch(_timeInput.text);
         Debug.Log(_timeCorrect);
-        if (_timeCorrect)
-            _alarmTimeSpan = AlarmSetTime(_timeInput.text);
+        if (!_timeCorrect)
+            return;
+        _alarmTimeSpan = AlarmSetTime(_timeInput.text);
+    }
+
+    public void SetAlarm()
+    {
+        EventController.Instance.OnSetAlarm(_alarmTimeSpan);
+        EventController.Instance.OnActivateClocks();
     }
 
     private TimeSpan AlarmSetTime(string time)
