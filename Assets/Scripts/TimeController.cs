@@ -61,6 +61,20 @@ public class TimeController : MonoBehaviour
         }
     }
 
+    private TimeSpan _alarmTime;
+
+    public TimeSpan AlarmTime
+    {
+        get
+        {
+            return _alarmTime;
+        }
+        set
+        {
+            _alarmTime = value;
+        }
+    }
+
     public void GetRequest()
     {
         StartCoroutine(GetTimeHttpRequest(URIS[_choosedURI]));
@@ -114,7 +128,7 @@ public class TimeController : MonoBehaviour
         }
     }
 
-    private DateTime ParseTime(string datetime)
+    public static DateTime ParseTime(string datetime)
     {
         string time = Regex.Match(datetime, @"\d{2}:\d{2}:\d{2}").Value;
         return DateTime.Parse(time);

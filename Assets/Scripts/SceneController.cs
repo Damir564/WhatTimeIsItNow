@@ -7,6 +7,7 @@ public class SceneController : MonoBehaviour
 {
     [SerializeField] private GameObject _services;
     [SerializeField] private GameObject _clocks;
+    [SerializeField] private GameObject _alarm;
     
     private void Start()
     {
@@ -21,7 +22,15 @@ public class SceneController : MonoBehaviour
 
     private void ActivateClocks()
     {
-        _clocks.SetActive(true);
         _services.SetActive(false);
+        _clocks.SetActive(true);
+        _alarm.SetActive(false);
+    }
+
+    private void ActivateAlarm()
+    {
+        _services.SetActive(false);
+        _clocks.SetActive(false);       
+        _alarm.SetActive(true);
     }
 }

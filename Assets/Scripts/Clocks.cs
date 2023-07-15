@@ -9,15 +9,17 @@ public class Clocks : MonoBehaviour
     [SerializeField] private RectTransform _minutesArrow;
     [SerializeField] private RectTransform _hoursArrow;
 
-    [SerializeField] private float reconcileTimeSeconds; // 3600f
+    [SerializeField] private float checkTimeSeconds; // 3600f
 
     void Update()
     {
         TimeSpan timeSpan = TimeController.Instance.CurrentTime.TimeOfDay;
         DigitsUpdate(timeSpan);
         OriginUpdate(timeSpan);
-        if (TimeController.Instance.SecondsFromClockStart > reconcileTimeSeconds)
+        if (TimeController.Instance.SecondsFromClockStart > checkTimeSeconds)
             EventController.Instance.OnGetRequest();
+        if (timeSpan > TimeController.Instance.AlarmTime)
+            Debug.Log("Alarm");
     }
 
     private void OriginUpdate(in TimeSpan timeSpan)
