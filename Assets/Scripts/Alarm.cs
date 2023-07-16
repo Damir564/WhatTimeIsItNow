@@ -7,15 +7,18 @@ using UnityEngine.EventSystems;
 public class Alarm : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerDownHandler
 {
     [SerializeField] private TMP_InputField _timeInput;
+    [SerializeField] private TMP_Text _timePlaceHolder;
 
     private int prevLength = -1;
     private TimeSpan _alarmTimeSpan;
 
     private bool _timeCorrect = false;
+    private bool _isAnalog = false;
 
     private Camera _myCam;
     private Vector3 _screenPos;
     private float _angleOffset;
+    
     [SerializeField] private Transform _secondsArrow;
     [SerializeField] private Transform _minutesArrow;
     [SerializeField] private Transform _hoursArrow;
@@ -26,8 +29,7 @@ public class Alarm : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerDownH
         GameObject gameObj = pointerEventData.pointerCurrentRaycast.gameObject;
         if (!gameObj)
             return;
-        string gameObjName = gameObj.name;
-        AssignDraggindArrow(gameObjName);
+        AssignDraggindArrow(gameObj.name);
     }
 
     private void AssignDraggindArrow(string objName)
@@ -47,7 +49,7 @@ public class Alarm : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerDownH
                 _draggingArrow = null;
                 return;
         }
-        Debug.Log(_draggingArrow);
+        // Debug.Log(_draggingArrow);
     }
 
     public void OnDrag(PointerEventData pointerEventData)
@@ -55,9 +57,11 @@ public class Alarm : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerDownH
         if (!_draggingArrow)
             return;
 
-        // Debug.Log("Mouse pos: " + Input.mousePosition);
-        // Debug.Log("_draggingArrow.position: " + _draggingArrow.position);
+        CalculateRotation();
+    }
 
+    private void CalculateRotation()
+    {
         Vector3 vec3 = (Input.mousePosition - _draggingArrow.position).normalized;
         float angle = Mathf.Atan2(vec3.y, vec3.x) * Mathf.Rad2Deg- 90;
         Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
@@ -66,20 +70,61 @@ public class Alarm : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerDownH
 
     public void OnEndDrag(PointerEventData pointerEventData)
     {
-        GameObject gameObj = pointerEventData.pointerCurrentRaycast.gameObject;
-        if (!gameObj)
+        // GameObject gameObj = pointerEventData.pointerCurrentRaycast.gameObject;
+        if (!_draggingArrow)
             return;
 
-        _draggingArrow = null;
-        Debug.Log("EndDrag: " + pointerEventData.pointerCurrentRaycast.gameObject?.name);
+        AssignArrowAngles();
+        // Debug.Log("EndDrag: " + pointerEventData.pointerCurrentRaycast.gameObject?.name);
     }
 
+    private void AssignArrowAngles()
+    {
+        // float arrowAngle = 360f - _draggingArrow.eulerAngles.z;
+        // Debug.Log("ArrowAngle:" + arrowAngle);
 
-    // Start is called before the first frame update
+        TimeSpan curTime = TimeController.Instance.CurrentTime;
+
+        float secondsAngle;
+        float minutesAngle;
+        float hoursAngle;
+
+        int seconds;
+        int minutes;
+        int hours;
+        secondsAngle = (360f - _secondsArrow.eulerAngles.z) % 360f;
+        minutesAngle = (360f - _minutesArrow.eulerAngles.z) % 360f;
+        hoursAngle = (360f - _hoursArrow.eulerAngles.z) % 360f;
+
+        // Debug.Log("!!!!!!!!!!");
+        // Debug.Log(secondsAngle);
+        // Debug.Log(minutesAngle);
+        // Debug.Log(hoursAngle);
+        // Debug.Log("!!!!!!!!!!");
+        
+        seconds = Convert.ToInt32(Mathf.Floor(secondsAngle / 6f));
+        minutes = Convert.ToInt32(Mathf.Floor(minutesAngle / 6f));
+        hours = Convert.ToInt32(Mathf.Floor(hoursAngle / 30f));
+        Debug.Log("===========");
+        Debug.Log(seconds);
+        Debug.Log(minutes);
+        Debug.Log(hours);
+        Debug.Log("===========");
+
+        _alarmTimeSpan = new TimeSpan(hours, minutes, seconds);
+        _isAnalog = true;
+
+        _draggingArrow = null;
+        // ShowOnLabel(hours, minutes, seconds);
+    }
+
+    // private void ShowOnLabel(int hours, int minutes, int seconds)
+    // {
+    //     _timePlaceHolder.text = String.Join(':', hours, minutes, seconds);
+    // }
+
     private void Start()
     {
-        _draggingArrow = null;
-
         EventController.Instance.ResetAlarm += ResetAlarm;
 
         EventController.Instance.OnResetAlarm();
@@ -96,6 +141,7 @@ public class Alarm : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerDownH
         _alarmTimeSpan = TimeSpan.MinValue;
         _timeInput.text = "";
         _timeCorrect = false;
+        _isAnalog = false;
     }
 
     public void OnValueChanged(string value)
@@ -111,6 +157,7 @@ public class Alarm : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerDownH
         prevLength = _timeInput.text.Length;
 
         HandleOnlyDigitsInput(prevLength);
+        _isAnalog = false;
         if (prevLength == 8)
             CheckDigits(prevLength);
     }
@@ -193,16 +240,16 @@ public class Alarm : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerDownH
         Debug.Log(_timeCorrect);
         if (!_timeCorrect)
             return;
-        _alarmTimeSpan = AlarmSetTime(_timeInput.text);
+        _alarmTimeSpan = AlarmSetTimeFromDigit(_timeInput.text);
     }
 
     public void SetAlarm()
     {
-        EventController.Instance.OnSetAlarm(_alarmTimeSpan);
+        EventController.Instance.OnSetAlarm(_alarmTimeSpan, _isAnalog);
         EventController.Instance.OnActivateClocks();
     }
 
-    private TimeSpan AlarmSetTime(in string time)
+    private TimeSpan AlarmSetTimeFromDigit(in string time)
     {
         return TimeSpan.Parse(time);
     }

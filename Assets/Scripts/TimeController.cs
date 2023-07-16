@@ -52,12 +52,22 @@ public class TimeController : MonoBehaviour
 
     private DateTime _currentTime;
 
-    public DateTime CurrentTime
+    public TimeSpan CurrentTime
     {
         get
         {
             _secondsFromClockStart = Time.realtimeSinceStartup - _timeFromStartHttpResponded;
-            return _currentTime.AddSeconds(_secondsFromClockStart);
+            return _currentTime.AddSeconds(_secondsFromClockStart).TimeOfDay;
+        }
+    }
+
+    public TimeSpan CurrentTime12
+    {
+        get
+        {
+            if (CurrentTime.Hours > 12)
+                return (CurrentTime - TimeSpan.FromHours(12));
+            return CurrentTime;
         }
     }
 
@@ -75,6 +85,20 @@ public class TimeController : MonoBehaviour
         }
     }
 
+    private bool _isAnalog = false;
+
+    public bool IsAnalog
+    {
+        get
+        {
+            return _isAnalog;
+        }
+        set
+        {
+            _isAnalog = value;
+        }
+    }
+
     private TimeSpan _alarmTime;
 
     public TimeSpan AlarmTime
@@ -89,15 +113,27 @@ public class TimeController : MonoBehaviour
         }
     }
 
+    // public TimeSpan AlarmTime12
+    // {
+    //     get
+    //     {
+    //         if (_alarmTime.Hours > 12)
+    //             return (_alarmTime - TimeSpan.FromHours(12));
+    //         return _alarmTime;
+    //     }
+    // }
+
     private void ResetAlarm()
     {
         _hasAlarm = false;
+        _isAnalog = false;
         _alarmTime = TimeSpan.MinValue;
     }
 
-    private void SetAlarm(TimeSpan ts)
+    private void SetAlarm(TimeSpan ts, bool isAnalog)
     {
         _hasAlarm = true;
+        _isAnalog = isAnalog;
         _alarmTime = ts;
     }
 

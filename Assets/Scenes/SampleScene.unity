@@ -350,7 +350,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &219942620
 RectTransform:
   m_ObjectHideFlags: 0
@@ -387,10 +387,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _timeInput: {fileID: 851135954}
+  _timePlaceHolder: {fileID: 1096738893}
   _secondsArrow: {fileID: 987385528}
   _minutesArrow: {fileID: 1207486302}
   _hoursArrow: {fileID: 557507517}
-  _draggingArrow: {fileID: 0}
 --- !u!1 &248217132
 GameObject:
   m_ObjectHideFlags: 0
@@ -482,7 +482,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &411834355
 RectTransform:
   m_ObjectHideFlags: 0
@@ -846,14 +846,14 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 557507516}
-  m_LocalRotation: {x: 0, y: 0, z: -0.5735764, w: 0.8191521}
+  m_LocalRotation: {x: 0, y: 0, z: -0.258819, w: 0.9659259}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1821556171}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -70}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -30}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}

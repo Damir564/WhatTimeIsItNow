@@ -21,7 +21,7 @@ public class EventController : MonoBehaviour
     public UnityAction OpenAlarm;
     public UnityAction ResetAlarm;
     public UnityAction Message;
-    public event Action<TimeSpan> SetAlarm;
+    public event Action<TimeSpan, bool> SetAlarm;
     public UnityAction GetRequest;
     // public event Action<string> AlarmArrowChange;
 
@@ -87,8 +87,8 @@ public class EventController : MonoBehaviour
         EventController.Instance.ResetAlarm?.Invoke();
     }
 
-    public void OnSetAlarm(TimeSpan ts)
+    public void OnSetAlarm(TimeSpan ts, bool isAnalog)
     {
-        EventController.Instance.SetAlarm?.Invoke(ts);
+        EventController.Instance.SetAlarm?.Invoke(ts, isAnalog);
     }
 }
