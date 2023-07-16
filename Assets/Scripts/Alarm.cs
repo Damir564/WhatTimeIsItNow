@@ -2,8 +2,9 @@ using System.Text.RegularExpressions;
 using UnityEngine;
 using TMPro;
 using System;
+using UnityEngine.EventSystems;
 
-public class Alarm : MonoBehaviour
+public class Alarm : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerDownHandler
 {
     [SerializeField] private TMP_InputField _timeInput;
 
@@ -12,9 +13,73 @@ public class Alarm : MonoBehaviour
 
     private bool _timeCorrect = false;
 
+    private Camera _myCam;
+    private Vector3 _screenPos;
+    private float _angleOffset;
+    [SerializeField] private Transform _secondsArrow;
+    [SerializeField] private Transform _minutesArrow;
+    [SerializeField] private Transform _hoursArrow;
+    private Transform _draggingArrow;
+
+    public void OnPointerDown(PointerEventData pointerEventData)
+    {
+        GameObject gameObj = pointerEventData.pointerCurrentRaycast.gameObject;
+        if (!gameObj)
+            return;
+        string gameObjName = gameObj.name;
+        AssignDraggindArrow(gameObjName);
+    }
+
+    private void AssignDraggindArrow(string objName)
+    {
+        switch (objName)
+        {
+            case "Seconds":
+                _draggingArrow = _secondsArrow;
+                break;
+            case "Minutes":
+                _draggingArrow = _minutesArrow;
+                break;
+            case "Hours":
+                _draggingArrow = _hoursArrow;
+                break;
+            default:
+                _draggingArrow = null;
+                return;
+        }
+        Debug.Log(_draggingArrow);
+    }
+
+    public void OnDrag(PointerEventData pointerEventData)
+    {
+        if (!_draggingArrow)
+            return;
+
+        // Debug.Log("Mouse pos: " + Input.mousePosition);
+        // Debug.Log("_draggingArrow.position: " + _draggingArrow.position);
+
+        Vector3 vec3 = (Input.mousePosition - _draggingArrow.position).normalized;
+        float angle = Mathf.Atan2(vec3.y, vec3.x) * Mathf.Rad2Deg- 90;
+        Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        _draggingArrow.rotation = Quaternion.Slerp(_draggingArrow.rotation, rotation, 20f);
+    }
+
+    public void OnEndDrag(PointerEventData pointerEventData)
+    {
+        GameObject gameObj = pointerEventData.pointerCurrentRaycast.gameObject;
+        if (!gameObj)
+            return;
+
+        _draggingArrow = null;
+        Debug.Log("EndDrag: " + pointerEventData.pointerCurrentRaycast.gameObject?.name);
+    }
+
+
     // Start is called before the first frame update
     private void Start()
     {
+        _draggingArrow = null;
+
         EventController.Instance.ResetAlarm += ResetAlarm;
 
         EventController.Instance.OnResetAlarm();
@@ -50,7 +115,7 @@ public class Alarm : MonoBehaviour
             CheckDigits(prevLength);
     }
 
-    private void HandleOnlyDigitsInput(int currentLength)
+    private void HandleOnlyDigitsInput(in int currentLength)
     {
         if (currentLength == 0)
             return;
@@ -64,7 +129,7 @@ public class Alarm : MonoBehaviour
             HandleMaxValue(currentLength);
     }
 
-    private void HandleMaxValue(int currentLength)
+    private void HandleMaxValue(in int currentLength)
     {
         int tempValue = 0;
         int tempValue2 = 0;
@@ -103,7 +168,7 @@ public class Alarm : MonoBehaviour
         }
     }
 
-    private void DeleteLastChar(int currentLength)
+    private void DeleteLastChar(in int currentLength)
     {
         if (currentLength == 1)
             _timeInput.text = "";
@@ -111,7 +176,7 @@ public class Alarm : MonoBehaviour
             _timeInput.text = _timeInput.text.Substring(0, currentLength - 1);
     }
 
-    private void AddColon(bool isLast, int currentLength)
+    private void AddColon(bool isLast, in int currentLength)
     {
         if (isLast)
             _timeInput.text = _timeInput.text + ":";
@@ -121,7 +186,7 @@ public class Alarm : MonoBehaviour
         _timeInput.stringPosition++;
     }
 
-    private void CheckDigits(int currentLength)
+    private void CheckDigits(in int currentLength)
     {
         Regex regex = new Regex(@"\d{2}:\d{2}:\d{2}");
         _timeCorrect = regex.IsMatch(_timeInput.text);
@@ -137,7 +202,7 @@ public class Alarm : MonoBehaviour
         EventController.Instance.OnActivateClocks();
     }
 
-    private TimeSpan AlarmSetTime(string time)
+    private TimeSpan AlarmSetTime(in string time)
     {
         return TimeSpan.Parse(time);
     }

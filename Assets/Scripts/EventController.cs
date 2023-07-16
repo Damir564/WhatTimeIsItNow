@@ -23,7 +23,7 @@ public class EventController : MonoBehaviour
     public UnityAction Message;
     public event Action<TimeSpan> SetAlarm;
     public UnityAction GetRequest;
-    public event Action<string> AlarmArrowChange;
+    // public event Action<string> AlarmArrowChange;
 
     public void OnAlarmArrowChange(string gameObj)
     {

@@ -16,9 +16,26 @@ public class Clocks : MonoBehaviour
         TimeSpan timeSpan = TimeController.Instance.CurrentTime.TimeOfDay;
         DigitsUpdate(timeSpan);
         OriginUpdate(timeSpan);
+        CheckSecondsFromStart();
+        CheckAlarmTime(timeSpan);
+        
+    }
+
+    private void CheckSecondsFromStart()
+    {
         if (TimeController.Instance.SecondsFromClockStart > checkTimeSeconds)
             EventController.Instance.OnGetRequest();
-        if (TimeController.Instance.HasAlarm && timeSpan >= TimeController.Instance.AlarmTime)
+    }
+
+    private void CheckAlarmTime(in TimeSpan timeSpan)
+    {
+        // Debug.Log((TimeController.Instance.AlarmTime - timeSpan).TotalSeconds.ToString() + 
+        // "\n" + 
+        // ((TimeController.Instance.AlarmTime - timeSpan).TotalSeconds > 1).ToString());
+        TimeSpan alarmTimeSpan = TimeController.Instance.AlarmTime;
+        if (TimeController.Instance.HasAlarm
+            && alarmTimeSpan <= timeSpan
+            && timeSpan <= alarmTimeSpan.Add(TimeSpan.FromSeconds(1.0)))
         {
             Debug.Log("Alarm");
             EventController.Instance.OnMessage();

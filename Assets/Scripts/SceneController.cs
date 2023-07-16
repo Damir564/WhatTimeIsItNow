@@ -4,7 +4,7 @@ using UnityEngine.Events;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class SceneController : MonoBehaviour, IPointerClickHandler, IPointerDownHandler
+public class SceneController : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] private GameObject _services;
     [SerializeField] private GameObject _clocks;
@@ -15,6 +15,8 @@ public class SceneController : MonoBehaviour, IPointerClickHandler, IPointerDown
     
     public void OnPointerClick(PointerEventData pointerEventData)
     {
+        if (!pointerEventData.pointerCurrentRaycast.gameObject)
+            return;
         string tag = pointerEventData.pointerCurrentRaycast.gameObject.tag;
         if (tag.Equals("Clocks"))
             EventController.Instance.OnOpenAlarm();
@@ -24,12 +26,13 @@ public class SceneController : MonoBehaviour, IPointerClickHandler, IPointerDown
         // Debug.Log(pointerEventData.pointerCurrentRaycast.gameObject.layer + " Game Object Clicked!");
     }
 
-    public void OnPointerDown(PointerEventData pointerEventData)
-    {
-        if (pointerEventData.pointerCurrentRaycast.gameObject.tag.Equals("Alarm"))
-            EventController.Instance.OnAlarmArrowChange(pointerEventData.pointerCurrentRaycast.gameObject.name);
-        Debug.Log(pointerEventData.pointerCurrentRaycast.gameObject.name);
-    }
+    // public void OnPointerDown(PointerEventData pointerEventData)
+    // {
+    //     if (pointerEventData.pointerCurrentRaycast.gameObject.tag.Equals("Alarm"))
+    //         EventController.Instance.OnAlarmArrowChange(pointerEventData.pointerCurrentRaycast.gameObject.name);
+    //     // Debug.Log(pointerEventData.pointerCurrentRaycast.gameObject.name);
+    // }
+
 
     private void Start()
     {
