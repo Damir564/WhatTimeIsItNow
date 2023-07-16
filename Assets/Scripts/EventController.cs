@@ -18,9 +18,17 @@ public class EventController : MonoBehaviour
 
     public UnityAction SceneReloaded;
     public UnityAction ActivateClocks;
+    public UnityAction OpenAlarm;
     public UnityAction ResetAlarm;
+    public UnityAction Message;
     public event Action<TimeSpan> SetAlarm;
     public UnityAction GetRequest;
+    public event Action<string> AlarmArrowChange;
+
+    public void OnAlarmArrowChange(string gameObj)
+    {
+
+    }
 
     private void Awake()
     {
@@ -60,6 +68,18 @@ public class EventController : MonoBehaviour
         Scene scene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(scene.name);
         Debug.Log("Scene Reloaded");
+    }
+
+    public void OnOpenAlarm()
+    {
+        OnResetAlarm();
+
+        EventController.Instance.OpenAlarm?.Invoke();
+    }
+
+    public void OnMessage()
+    {
+        EventController.Instance.Message?.Invoke();
     }
 
     public void OnResetAlarm()

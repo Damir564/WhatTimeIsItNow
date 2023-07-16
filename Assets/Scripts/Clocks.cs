@@ -18,8 +18,12 @@ public class Clocks : MonoBehaviour
         OriginUpdate(timeSpan);
         if (TimeController.Instance.SecondsFromClockStart > checkTimeSeconds)
             EventController.Instance.OnGetRequest();
-        if (TimeController.Instance.HasAlarm && timeSpan == TimeController.Instance.AlarmTime)
+        if (TimeController.Instance.HasAlarm && timeSpan >= TimeController.Instance.AlarmTime)
+        {
             Debug.Log("Alarm");
+            EventController.Instance.OnMessage();
+            EventController.Instance.OnResetAlarm();
+        }
     }
 
     private void OriginUpdate(in TimeSpan timeSpan)
